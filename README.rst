@@ -95,7 +95,7 @@ Contributing
 We welcome contributions to make this a stronger package: data examples,
 bug fixes, spelling errors, new features, etc.
 
-Much of the code was written during the `Summer Workshop on the Dynamic Brain 2019`_  hosted by the Allen institute for Brain Science.
+Much of the code was written during the `Summer Workshop on the Dynamic Brain 2019`_  hosted by the Allen institute for Brain Science and the Computational Neuroscience Program at the University of Washington.
 
 
 .. _Iain Carmichael: https://idc9.github.io/

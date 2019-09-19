@@ -95,8 +95,11 @@ Contributing
 We welcome contributions to make this a stronger package: data examples,
 bug fixes, spelling errors, new features, etc.
 
+Much of the code was written during the `Summer Workshop on the Dynamic Brain 2019`_  hosted by the Allen institute for Brain Science.
 
 
 .. _Iain Carmichael: https://idc9.github.io/
 .. _basic functionality notebook: https://github.com/idc9/explore/tree/master/doc/example_notebooks/basic_functionality.ipynb
 .. _these example notebooks: https://github.com/idc9/explore/tree/master/doc/example_notebooks
+.. _Summer Workshop on the Dynamic Brain 2019: https://alleninstitute.org/what-we-do/brain-science/events-training/events/summer-workshop-dynamic-brain-2019
+

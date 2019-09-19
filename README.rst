@@ -84,10 +84,10 @@ Documentation
 
 The source code is located on github: https://github.com/idc9/explore
 
-.. Testing
-.. ^^^^^^^
+Testing
+^^^^^^^
 
-.. Testing is done using `nose`.
+Testing is done using `nose`.
 
 Contributing
 ^^^^^^^^^^^^

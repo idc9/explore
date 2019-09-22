@@ -12,6 +12,7 @@ Overview
 
 explore provides tools for exploratory data analysis tasks including: comparing many pairs of variables, controlling for multiple testing and creating structured, visual summaries and diagnostics of the results. The idea behind explore is that with the right abstractions we can automate simple analyses without loosing sight of the original data.
 
+The use case motivating this package is the interpretation of unsupervised, exploratory analyses. For example, suppose we have two datasets, X, Y, on a fixed set of observations (e.g. X is a matrix of patient gene expression data and Y is a matrix of patient clinical variables) and we run a clustering algorithm on X. We may then (attempt to) interpret/understand/validate the clusters found in X by looking for associations between these clusters and the Y variables (e.g. the patients in genetic cluster 1 have high blood pressure).
 
 Installation
 ============

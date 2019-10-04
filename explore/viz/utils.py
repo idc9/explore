@@ -140,8 +140,10 @@ def bold(text):
     """
     Makes text blod
     """
+    # TODO: this is causing a strange latex error, figure out
     # TODO: escape under scores
-    return r"$\bf{" + text + "}$"
+    # return r"$\bf{" + text + "}$"
+    return text
 
 
 def count_plot(values, display='both'):

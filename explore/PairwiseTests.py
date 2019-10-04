@@ -41,7 +41,9 @@ class PairwiseTestsMixin(TestCollectionMixin):
             tst.fit(a, b)
 
         elif (not is_cat(a)) and is_cat(b):
-            if len(np.unique(b)) != 2:
+            # TODO: .astype(str) is a hack to fix weird error with nans
+            # figure out a better solution
+            if len(np.unique(b.astype(str))) != 2:
                 tst = ContCat(alpha=self.alpha,
                               test=self.cat_test,
                               multi_cat=self.multi_cat,
@@ -54,7 +56,9 @@ class PairwiseTestsMixin(TestCollectionMixin):
                 tst.fit(a, b)
 
         elif is_cat(a) and (not is_cat(b)):
-            if len(np.unique(b)) != 2:
+            # TODO: .astype(str) is a hack to fix weird error with nans
+            # figure out a better solution
+            if len(np.unique(b.astype(str))) != 2:
                 tst = ContCat(alpha=self.alpha,
                               test=self.cat_test,
                               multi_cat=self.multi_cat,

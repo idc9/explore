@@ -287,9 +287,11 @@ def _univariate_conditional_kdeplot(values, classes,
             if not include_overall:
                 continue
 
+            _kwargs['ls'] = '--'
+
             # _kwargs['alpha'] = .2
             _kwargs['zorder'] = 1
-            _kwargs['label'] = 'overall'
+            _kwargs['label'] = None  # 'overall'
             _kwargs['color'] = 'gray'
             _kwargs['shade'] = False
 

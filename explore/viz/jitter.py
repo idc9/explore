@@ -53,9 +53,8 @@ def jitter(x, how='order',
            jitter_cdf_width=0.05,
            color='black',
            s=1,
-           zorder=1,
+           zorder=2,
            **kwargs):
-    #  scatter_kws={'color': 'black', 's': 1, 'zorder': 1}):
 
     # defaults
     scatter_kws = {'color': color, 's': s, 'zorder': zorder}

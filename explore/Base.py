@@ -4,6 +4,8 @@ from textwrap import dedent
 
 from explore.utils import has_and_not_none
 
+# TODO: who should own alpha -- test collections or individual tests
+
 
 class TestMixin(BaseEstimator):
     def __init__(self, alpha=0.05):
@@ -53,10 +55,15 @@ class TestMixin(BaseEstimator):
         """
         self.pval_adj_ = p[0]
 
-    def plot(self):
+    def plot(self, verbosity=1):
         """
         Visual resresentation/diagnositc for test.
         Sub-class should overwrite.
+
+        Parameters
+        ----------
+        verbosity: int
+            Amount of detail to include in the plot.
         """
         raise NotImplementedError
 
@@ -147,10 +154,15 @@ class TestCollectionMixin(BaseEstimator):
         """
         raise NotImplementedError
 
-    def plot(self):
+    def plot(self, verbosity=1):
         """
         Visual resresentations/diagnositcs for tests in this collection.
         Sub-class should overwrite.
+
+        Parameters
+        ----------
+        verbosity: int
+            Amount of detail to include in the plot.
         """
         raise NotImplementedError
 
@@ -192,6 +204,7 @@ class Union(TestCollectionMixin):
     def __init__(self, alpha=0.05, multi_test='fdr_bh'):
         self.alpha = alpha
         self.multi_test = multi_test
+        self.tests_ = {}
 
     def add_tests(self, tests):
         """
@@ -204,6 +217,7 @@ class Union(TestCollectionMixin):
         """
         for name, test in tests:
             self.add_test(name, test)
+        return self
 
     def add_test(self, name, test):
         """
@@ -218,6 +232,7 @@ class Union(TestCollectionMixin):
             The test to add.
         """
         self.tests_[name] = test
+        return self
 
     def test_iter(self):
         """

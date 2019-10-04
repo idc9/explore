@@ -43,11 +43,20 @@ class SingleBlock(PairwiseTestsMixin):
         for a_var, b_var in combinations(self.var_names_, 2):
             yield self.comparisons_[frozenset((a_var, b_var))]
 
-    def plot(self, inches=8):
+    def plot(self, inches=8, verbosity=1):
         """
         Makes an upper trianglular grid of plots. The i,j th off diagaonal
         plot compares variable i to variable j. The diagonal plots
         summarize each variable.
+
+
+        Parameters
+        ----------
+        inches: float, None
+            Argument for plt.figsize, if None, will not create a new plt.figure.
+
+        verbosity: int
+            Amount of detail to include in the plot.
         """
 
         n_rows = len(self.var_names_)
@@ -65,7 +74,7 @@ class SingleBlock(PairwiseTestsMixin):
                 tst = self.comparisons_[frozenset((row_var, col_var))]
 
                 plt.subplot(grid[i, j])
-                tst.plot()
+                tst.plot(verbosity=verbosity)
 
             elif i == j:
                 values = self.X_[row_var]

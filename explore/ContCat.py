@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from copy import deepcopy
-from itertools import combinations
+from itertools import combinations, product
 
 from explore.Base import TestCollectionMixin
 from explore.ContBinCat import ContBinCat
@@ -140,7 +140,11 @@ class ContCat(TestCollectionMixin):
         results = pd.DataFrame(columns=['stat', 'rejected', 'pval'])
         for other_cl in self.labels_:
             if other_cl != cl:
-                tst = self.comparisons_[frozenset((cl, other_cl))]
+
+                if self.n_cats_ == 2:
+                    tst = self.comparisons_
+                else:
+                    tst = self.comparisons_[frozenset((cl, other_cl))]
                 results.loc[other_cl, 'stat'] = tst.stat_
                 results.loc[other_cl, 'pval'] = tst.pval_
                 results.loc[other_cl, 'rejected'] = tst.rejected_
@@ -164,30 +168,40 @@ class ContCat(TestCollectionMixin):
 
         return results
 
-    def plot(self):
+    def plot(self, verbosity=1):
         """
         Plots a categorical histogram.
+
+        Parameters
+        ----------
+        verbosity: int
+            Amount of detail to include in the plot.
         """
 
-        cl_labels = {}
         if self.n_cats_ == 2:
             self.comparisons_.plot()
 
         else:
-            for cl in self.labels_:
+            cl_labels = {}
+            if verbosity >= 1:
                 if self.multi_cat == 'ovr':
-                    bin_test = self.comparisons_[cl]
-                    label_kws = {'cl': cl,
-                                 'n': self.counts_[cl],
-                                 'stat_name': self.test,
-                                 'stat': bin_test.stat_,
-                                 'reject': bin_test.rejected_,
-                                 'test_prefix': 'one-vs-rest'}
+                    cl_labels = {}
+                    for cl in self.labels_:
+                        bin_test = self.comparisons_[cl]
+                        label_kws = {'cl': cl,
+                                     'n': self.counts_[cl],
+                                     'stat_name': self.test,
+                                     'stat': bin_test.stat_,
+                                     'reject': bin_test.rejected_,
+                                     'test_prefix': 'one-vs-rest'}
 
-                    cl_labels[cl] = _get_ovr_label(**label_kws)
+                        cl_labels[cl] = _get_ovr_label(**label_kws)
 
                 elif self.multi_cat == 'ovo':
                     cl_labels = _get_ovo_labels(self)
+
+            else:
+                cl_labels = {cl: cl for cl in self.labels_}
 
             if self.plot_mode == 'distplot':
                 cat_distplot(values=self.cont_,

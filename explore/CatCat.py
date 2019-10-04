@@ -79,9 +79,14 @@ class CatCat(TestMixin):
         return to_cat_df({self.var_names_[0]: self.a_,
                           self.var_names_[1]: self.b_})
 
-    def plot(self):
+    def plot(self, verbosity=1):
         """
         Plots a contingency table.
+
+        Parameters
+        ----------
+        verbosity: int
+            Amount of detail to include in the plot.
         """
 
         if self.plot_mode == 'count':

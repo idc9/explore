@@ -96,9 +96,14 @@ class ContCont(TestMixin):
         else:
             raise ValueError('how must be one of ["full", "quant_only"], not {}'.format(how))
 
-    def plot(self):
+    def plot(self, verbosity=1):
         """
         Plots a scatter plot with OLS regression line.
+
+        Parameters
+        ----------
+        verbosity: int
+            Amount of detail to include in the plot.
         """
         if callable(self.measure):
             corr_name = self.measure.__name__

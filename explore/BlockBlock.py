@@ -45,7 +45,7 @@ class BlockBlock(PairwiseTestsMixin):
                                         self.col_var_names_):
             yield self.comparisons_.loc[row_var, col_var]
 
-    def plot(self, inches=8):
+    def plot(self, inches=8, verbosity=1):
         """
         Makes a grid of plots where the i, j th plot shows the comparison between the ith variable of the first dataset and the jth variable of the second dataset.
         """
@@ -64,17 +64,7 @@ class BlockBlock(PairwiseTestsMixin):
             tst = self.comparisons_.loc[row_var, col_var]
 
             plt.subplot(grid[i, j])
-            tst.plot()
-
-    def report(self):
-        df = pd.DataFrame(index=self.row_var_names_,
-                          columns=self.col_var_names_)
-
-        for row_var, col_var in product(self.row_var_names_,
-                                        self.col_var_names_):
-            test = self.comparisons_.loc[row_var, col_var]
-
-            df.loc[row_var, col_var] = test.text_summary(how='quant_only')
+            tst.plot(verbosity=verbosity)
 
 
 BlockBlock.__doc__ = dedent("""\

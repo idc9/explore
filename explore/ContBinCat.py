@@ -97,18 +97,28 @@ class ContBinCat(TestMixin):
     #     else:
     #         raise ValueError('how must be one of ["full", "quant_only"], not {}'.format(how))
 
-    def plot(self):
+    def plot(self, verbosity=1):
+        """
+        Parameters
+        ----------
+        verbosity: int
+            Amount of detail to include in the plot.
+        """
 
         cl_labels = {}
         for cl in self.labels_:
-            label_kws = {'cl': cl,
-                         'n': self.counts_[cl],
-                         'stat_name': self.test,
-                         'stat': self.stat_,
-                         'reject': self.rejected_,
-                         'test_prefix': ''}
 
-            cl_labels[cl] = _get_ovr_label(**label_kws)
+            if verbosity >= 1:
+                label_kws = {'cl': cl,
+                             'n': self.counts_[cl],
+                             'stat_name': self.test,
+                             'stat': self.stat_,
+                             'reject': self.rejected_,
+                             'test_prefix': ''}
+
+                cl_labels[cl] = _get_ovr_label(**label_kws)
+            else:
+                cl_labels[cl] = cl
 
         # cat_distplot(values=self.cont_,
         #              classes=self.cat_,

@@ -9,7 +9,7 @@ import seaborn as sns
 import statsmodels.api as sm
 from itertools import product
 
-from hdda.viz.utils import count_plot
+from explore.viz.utils import count_plot
 
 
 def plot_cross_props(categories, fig_kws={}):

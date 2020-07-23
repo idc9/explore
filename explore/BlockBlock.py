@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from itertools import product
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
+from matplotlib.gridspec import GridSpec
 from textwrap import dedent
 
 from explore.PairwiseTests import PairwiseTestsMixin, _pairwise_docs
@@ -45,19 +45,21 @@ class BlockBlock(PairwiseTestsMixin):
                                         self.col_var_names_):
             yield self.comparisons_.loc[row_var, col_var]
 
-    def plot(self, inches=8, verbosity=1):
+    def plot(self, inches=8, verbosity=1, wspace=None, hspace=None):
         """
         Makes a grid of plots where the i, j th plot shows the comparison between the ith variable of the first dataset and the jth variable of the second dataset.
         """
 
-        n_rows = len(self.row_var_names_)
-        n_cols = len(self.col_var_names_)
+        nrows = len(self.row_var_names_)
+        ncols = len(self.col_var_names_)
 
         if inches is not None:
-            plt.figure(figsize=(inches * n_cols, inches * n_rows))
+            plt.figure(figsize=(inches * ncols, inches * nrows))
 
-        grid = gridspec.GridSpec(n_rows, n_cols)
-        for i, j in product(range(n_rows), range(n_cols)):
+        grid = GridSpec(nrows=nrows, ncols=ncols,
+                        wspace=wspace, hspace=hspace)
+
+        for i, j in product(range(nrows), range(ncols)):
             row_var = self.row_var_names_[i]
             col_var = self.col_var_names_[j]
 

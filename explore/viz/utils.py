@@ -216,6 +216,6 @@ def fmt_pval(pval):
     if np.allclose(pval, 0):
         return '0.00'
     elif pval < .01:
-        return '{:1.2e}'.format(pval)
+        return '{:1.3e}'.format(pval)
     else:
-        return '{:1.2f}'.format(pval)
+        return '{:1.3f}'.format(pval)

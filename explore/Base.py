@@ -138,10 +138,14 @@ class TestCollectionMixin(BaseEstimator):
         """
         raw_pvals = self._send_pval()
 
-        rej_corr, pval_corr, _, __ = \
-            multipletests(pvals=raw_pvals,
-                          alpha=self.alpha,
-                          method=self.multi_test)
+        if len(raw_pvals) == 1:
+            pval_corr = raw_pvals
+
+        else:
+            rej_corr, pval_corr, _, __ = \
+                multipletests(pvals=raw_pvals,
+                              alpha=self.alpha,
+                              method=self.multi_test)
 
         self._receive_pval(pval_corr)
 

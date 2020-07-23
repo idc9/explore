@@ -61,6 +61,8 @@ class ContCat(TestCollectionMixin):
         if not is_cat(cat):
             raise ValueError('b must be a categorical variable.')
 
+        assert self.multi_cat in ['ovo', 'ovr']
+
         self.cont_, self.cont_nan_idxs_, self.cat_, self.cat_nan_idxs_ = \
             process_var_pair(a=cont, b=cat,
                              nan_how_a='drop',
@@ -69,6 +71,8 @@ class ContCat(TestCollectionMixin):
 
         self.cat_ = self.cat_.astype(str)
         self.labels_ = np.unique(self.cat_)
+        if len(self.labels_) <= 1:
+            raise ValueError('Must provide observations from at least two classes.')
         self.counts_ = get_counts(self.cat_)
         self.n_cats_ = len(self.labels_)
 
@@ -106,9 +110,6 @@ class ContCat(TestCollectionMixin):
                 tst.fit(self.cont_, b_ovr)
 
                 self.comparisons_[cl] = tst
-
-        else:
-            raise ValueError('multi_cat must be one of ["ovo", "ovr"]')
 
         return self
 

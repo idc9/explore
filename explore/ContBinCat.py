@@ -61,6 +61,8 @@ class ContBinCat(TestMixin):
 
         self.cat_ = self.cat_.astype(str)
         self.labels_ = np.unique(self.cat_)
+        if len(self.labels_) <= 1:
+            raise ValueError('Must provide observations from at least two classes.')
         self.counts_ = get_counts(self.cat_)
         self.n_cats_ = len(self.labels_)
 

@@ -8,7 +8,8 @@ from explore.Base import TestMixin
 from explore.utils import get_crosstab, get_counts, process_var_pair, is_cat
 from explore.viz.utils import bold, fmt_pval
 from explore.viz.cross_categories import plot_cross_counts, plot_cross_props, to_cat_df
-from explore.viz.utils import heatmap
+# from explore.viz.utils import heatmap
+import seaborn as sns
 
 
 class CatCat(TestMixin):
@@ -107,7 +108,7 @@ class CatCat(TestMixin):
             raise ValueError("plot_mode must be one of ['count', 'resid', 'chi2']")
 
         # sns.heatmap(values, annot=True, fmt=fmt, center=center)
-        heatmap(values, annot=True, fmt=fmt, center=center)
+        sns.heatmap(values, annot=True, fmt=fmt, center=center)
         # TODO: switch to sns.heatmap when https://github.com/mwaskom/seaborn/issues/1773 gets fixed
 
         title = '(chi2={:1.3f}, p={})'.format(self.chi2_,

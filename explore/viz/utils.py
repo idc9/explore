@@ -197,16 +197,16 @@ def count_plot(values, display='both'):
     plt.xlabel('count')
 
 
-def heatmap(data, **kws):
-    """
-    Seaborn heatmap without cutting top/bottom off.
-    """
-    sns.heatmap(data, **kws)
-    plt.ylim(data.shape[1], 0)
+# def heatmap(data, **kws):
+#     """
+#     Seaborn heatmap without cutting top/bottom off.
+#     """
+#     sns.heatmap(data, **kws)
+#     plt.ylim(data.shape[1], 0)
 
 
-heatmap.__doc__ = 'Fixes seaborn heatmap issue where top/bottom '\
-                  'axes get cutoff (see https://github.com/mwaskom/seaborn/issues/1773) \n {}'.format(sns.heatmap.__doc__)
+# heatmap.__doc__ = 'Fixes seaborn heatmap issue where top/bottom '\
+#                   'axes get cutoff (see https://github.com/mwaskom/seaborn/issues/1773) \n {}'.format(sns.heatmap.__doc__)
 
 
 def fmt_pval(pval):

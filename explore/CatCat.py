@@ -107,8 +107,14 @@ class CatCat(TestMixin):
         else:
             raise ValueError("plot_mode must be one of ['count', 'resid', 'chi2']")
 
+        # annotations not very useful for large number of categories
+        if max(values.shape) > 10:
+            annot = False
+        else:
+            annot = True
+
         # sns.heatmap(values, annot=True, fmt=fmt, center=center)
-        sns.heatmap(values, annot=True, fmt=fmt, center=center)
+        sns.heatmap(values, annot=annot, fmt=fmt, center=center)
         # TODO: switch to sns.heatmap when https://github.com/mwaskom/seaborn/issues/1773 gets fixed
 
         title = '(chi2={:1.3f}, p={})'.format(self.chi2_,

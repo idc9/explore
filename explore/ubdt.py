@@ -17,13 +17,12 @@ def binary_dist_test(a, b, test='auc'):
     a, b: array-like
         The observation values in each class.
 
-    test: str (['ad', 'auc', 'mw', 'ks', 't']), callable
+    test: str (['ad','mw', 'ks', 't']), callable
         Which test to use.
         'ad': Anderson-Darling (general test for differing distributions)
         'ks': Kolmogorov-Smirnov (general test for differing distributions)
         't': t-test for difference in locations.
-        'mw': Mann Whitney U test for difference in locations (reports auc staistic)
-        'auc': Reports AUC statistics for Mann Whitney U test for difference in locations.
+        'mw': Mann Whitney U test for difference in locations (reports AUC staistic)
 
         if callable, should take two array-like arguments.
 
@@ -46,12 +45,8 @@ def binary_dist_test(a, b, test='auc'):
     elif test in ['auc', 'mw', 'mannwhitneyu']:
 
         result = binary_mann_whitney_u(a, b)
-        pval = 2 * result['pval']  # makes two-sided
-
-        if test == 'auc':
-            stat = result['auc']
-        else:
-            stat = result['z']  # or u?
+        pval = result['pval']  # makes two-sided
+        stat = result['auc']
 
     elif test == 'ks':
         stat, pval = ks_2samp(a, b)
@@ -68,17 +63,48 @@ def binary_dist_test(a, b, test='auc'):
     return stat, pval
 
 
-def binary_mann_whitney_u(a, b):
+def binary_mann_whitney_u(a, b, alternative='two-sided', method='auto',):
     """
     Mann- Whitney U test for difference in locations. Wraps scipy.stats.mannwhitneyu. Reports the larger U statisic. Also
     compute 'auc' and 'z' statistics.
 
     Note the Mann-Whitney U statistics can be rescaled to be equal to the AUC
     scores.
+
+    Parameters
+    ----------
+    a: array-like, shape (n_samples, )
+        The observation values in the first class.
+
+    b: array-like, shape (n_samples, )
+        The observation values in the second class.
+
+    alternative: str
+        The alternative hypotheses; must be one of ['two-sided', 'less', 'greater']. See scipy.stats.mannwhitneyu.
+
+    method: str
+        How to compute the p-value; must be one of ['auto', 'exact']. See scipy.stats.mannwhitneyu.
+
+    Output
+    ------
+    results: dict
+
+    results['U']: float
+        The U statisitic
+
+    results['Z']: float
+        The Z statisitc.
+
+    results['auc']: float
+        The AUC statisitic.
+
+    results['pval']: float
+        The pvalue.
     """
 
-    resuts = mannwhitneyu(a, b)
-    U = resuts.statistic
+    results = mannwhitneyu(a, b, use_continuity=True,
+                           alternative=alternative, method=method)
+    U = results.statistic
 
     # let's report the larger U instead
     U = len(a) * len(b) - U
@@ -91,10 +117,13 @@ def binary_mann_whitney_u(a, b):
     sigma = np.sqrt(len(a) * len(b) * (len(a) + len(b) + 1) / 12)
     z = (U - m) / sigma
 
+    if alternative == 'two-sided':
+        z = abs(z)
+
     return {'U': U,
             'auc': auc,
-            'z': z,
-            'pval': resuts.pvalue}
+            'Z': z,
+            'pval': results.pvalue}
 
 
 def _get_ovr_label(cl, n, stat_name, stat, reject, test_prefix='one-vs-rest'):

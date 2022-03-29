@@ -44,8 +44,8 @@ def binary_dist_test(a, b, test='auc'):
 
     elif test in ['auc', 'mw', 'mannwhitneyu']:
 
-        result = binary_mann_whitney_u(a, b)
-        pval = result['pval']  # makes two-sided
+        result = binary_mann_whitney_u(a, b, alternative='two-sided')
+        pval = result['pval']
         stat = result['auc']
 
     elif test == 'ks':
